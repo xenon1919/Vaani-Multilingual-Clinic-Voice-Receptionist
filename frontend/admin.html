@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aarogya Clinic — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .page { max-width: 1000px; margin: 40px auto; padding: 0 16px 60px; }
+    .page-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+    h1 { margin: 0; font-size: 24px; }
+    .subtitle { color: var(--color-text-muted); margin: 4px 0 24px; font-size: 14px; }
+    .nav-links { font-size: 13px; color: var(--color-text-faint); }
+
+    section { margin-bottom: 32px; }
+    section .card { padding: 20px 22px; }
+    section h2 { margin: 0 0 16px; font-size: 16px; }
+
+    .filters { display: flex; gap: 12px; flex-wrap: wrap; align-items: end; margin-bottom: 18px; }
+    .filters .field label { display: block; font-size: 12px; color: var(--color-text-muted); margin-bottom: 4px; font-weight: 600; }
+
+    .table-wrap { overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="page-header">
+      <h1>Aarogya Clinic — Admin</h1>
+      <span class="nav-links"><a href="/">Call page</a> · <a href="/lookup.html">Patient lookup</a></span>
+    </div>
+    <p class="subtitle">Staff view of appointments and recent calls.</p>
+
+    <div id="authError"></div>
+
+    <section>
+      <div class="card">
+        <h2>Appointments</h2>
+        <form class="filters" id="filterForm">
+          <div class="field">
+            <label for="dateFilter">Date</label>
+            <input type="date" id="dateFilter" />
+          </div>
+          <div class="field">
+            <label for="doctorFilter">Doctor</label>
+            <select id="doctorFilter"><option value="">All doctors</option></select>
+          </div>
+          <div class="field">
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter">
+              <option value="">All statuses</option>
+              <option value="booked">Booked</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="rescheduled">Rescheduled</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Apply filters</button>
+        </form>
+        <div class="table-wrap" id="appointmentsTable"></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h2>Recent calls</h2>
+        <div class="table-wrap" id="callsTable"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

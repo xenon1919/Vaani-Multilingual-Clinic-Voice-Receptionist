@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aarogya Clinic — Voice Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+    .call-card {
+      width: 100%;
+      max-width: 440px;
+      padding: 32px 28px 24px;
+      text-align: center;
+    }
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .logo svg { width: 26px; height: 26px; stroke: white; }
+    h1 { margin: 0 0 4px; font-size: 22px; }
+    .subtitle { color: var(--color-text-muted); margin: 0 0 24px; font-size: 14px; }
+
+    .mic-ring {
+      position: relative;
+      width: 92px;
+      height: 92px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mic-ring .ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+      transition: border-color 0.2s ease;
+    }
+    .mic-ring.listening .ring { border-color: var(--color-success); animation: ripple 1.6s ease-out infinite; }
+    .mic-ring.speaking .ring { border-color: var(--color-primary); animation: ripple 1.2s ease-out infinite; }
+    .mic-ring.checking .ring { border-color: var(--color-warning); animation: ripple 0.9s ease-out infinite; }
+    @keyframes ripple {
+      0% { transform: scale(0.85); opacity: 1; }
+      100% { transform: scale(1.35); opacity: 0; }
+    }
+    .mic-circle {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+    .mic-circle svg { width: 26px; height: 26px; stroke: var(--color-text-faint); transition: stroke 0.2s ease; }
+    .mic-ring.listening .mic-circle { background: var(--color-success-soft); border-color: var(--color-success); }
+    .mic-ring.listening .mic-circle svg { stroke: var(--color-success); }
+    .mic-ring.speaking .mic-circle { background: var(--color-primary-soft); border-color: var(--color-primary); }
+    .mic-ring.speaking .mic-circle svg { stroke: var(--color-primary); }
+    .mic-ring.checking .mic-circle { background: var(--color-warning-soft); border-color: var(--color-warning); }
+    .mic-ring.checking .mic-circle svg { stroke: var(--color-warning); }
+
+    #statusText { font-size: 14px; font-weight: 600; color: var(--color-text); margin-bottom: 2px; }
+    #timer { font-variant-numeric: tabular-nums; color: var(--color-text-muted); font-size: 13px; }
+
+    .controls { margin: 20px 0 4px; }
+
+    #transcript {
+      text-align: left;
+      margin-top: 18px;
+      height: 280px;
+      overflow-y: auto;
+      border-radius: var(--radius);
+      padding: 14px;
+      background: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+    }
+    #transcript:empty::before {
+      content: "Your conversation will appear here once the call starts.";
+      color: var(--color-text-faint);
+      font-style: italic;
+      font-size: 14px;
+    }
+    .turn { margin-bottom: 12px; max-width: 85%; animation: fadeIn 0.2s ease; }
+    .turn .label { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-text-faint); margin-bottom: 3px; }
+    .turn .bubble { padding: 9px 13px; border-radius: 14px; font-size: 14px; line-height: 1.45; }
+    .turn.caller { margin-left: auto; text-align: right; }
+    .turn.caller .bubble { background: var(--color-primary); color: white; display: inline-block; text-align: left; border-bottom-right-radius: 4px; }
+    .turn.agent .bubble { background: var(--color-surface); color: var(--color-text); display: inline-block; border: 1px solid var(--color-border); border-bottom-left-radius: 4px; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    .links { margin-top: 20px; font-size: 13px; color: var(--color-text-faint); }
+  </style>
+</head>
+<body>
+  <div class="card call-card">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+      </svg>
+    </div>
+    <h1>Aarogya Clinic</h1>
+    <p class="subtitle">Talk to Priya — Telugu, Hindi, English, or a mix.</p>
+
+    <div class="mic-ring idle" id="micRing">
+      <div class="ring"></div>
+      <div class="mic-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+        </svg>
+      </div>
+    </div>
+
+    <div id="statusText">Idle.</div>
+    <div id="timer"></div>
+
+    <div class="controls">
+      <button id="startBtn" class="btn btn-primary">Start Call</button>
+      <button id="stopBtn" class="btn btn-danger" disabled>End Call</button>
+    </div>
+
+    <div id="transcript"></div>
+
+    <p class="links">
+      <a href="/lookup.html">Check my appointment</a> · <a href="/admin.html">Staff login</a>
+    </p>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

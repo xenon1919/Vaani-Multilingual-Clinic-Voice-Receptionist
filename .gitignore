@@ -1,0 +1,25 @@
+# Secrets -- never commit
+.env
+*.pem
+*.key
+service-account*.json
+*-credentials.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Dev/run artifacts
+*.log
+scripts/server.log
+eval/audio_cache/
+eval/results/*.csv
+.DS_Store
+
+# Local-only downloaded binaries (e.g. Cloud SQL Auth Proxy)
+cloud-sql-proxy.exe
+cloud-sql-proxy

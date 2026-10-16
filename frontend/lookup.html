@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Aarogya Clinic — Check My Appointment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px 16px;
+    }
+    .lookup-card { width: 100%; max-width: 440px; padding: 32px 28px; }
+    h1 { margin: 0 0 4px; font-size: 22px; }
+    .subtitle { color: var(--color-text-muted); margin: 0 0 22px; font-size: 14px; }
+    form { display: flex; gap: 8px; margin-bottom: 20px; }
+    form input { flex: 1; font-size: 16px; }
+
+    .appt-card {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      background: var(--color-surface-muted);
+    }
+    .appt-card .doctor { font-weight: 700; font-size: 15px; }
+    .appt-card .when { color: var(--color-text-muted); font-size: 14px; margin: 2px 0 8px; }
+  </style>
+</head>
+<body>
+  <div class="card lookup-card">
+    <h1>Check My Appointment</h1>
+    <p class="subtitle">Enter the phone number you booked with.</p>
+    <form id="lookupForm">
+      <input type="tel" id="phoneInput" placeholder="10-digit phone number" required />
+      <button type="submit" class="btn btn-primary">Check</button>
+    </form>
+    <div id="results"></div>
+    <p class="links" style="margin-top: 18px; font-size: 13px; color: var(--color-text-faint);">
+      <a href="/">Back to call page</a>
+    </p>
+  </div>
+  <script src="lookup.js"></script>
+</body>
+</html>
