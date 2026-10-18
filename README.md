@@ -3,7 +3,7 @@
 "Vaani" (वाणी) is Sanskrit/Hindi for "voice" or "speech." A voice agent
 that books, reschedules, and cancels clinic appointments by phone in
 Telugu, Hindi, English, or a mix — built on the Gemini Live API, with a
-rigorous evaluation harness as a first-class deliverable. The fictional
+rigorous evaluation harness as a first-class deliverable. The fictional 
 clinic it answers for is "Aarogya Clinic."
 
 Fully local (Postgres via Docker Compose), synthetic data only. Originally
